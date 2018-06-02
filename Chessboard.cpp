@@ -15,8 +15,6 @@ Chessboard::Chessboard()
     whiteCount = 2;
 }
 
-
-
 bool Chessboard::isTerminal()
 {
     if ((blackCount + whiteCount) >= boardWidth * boardWidth)
