@@ -15,3 +15,20 @@ Chessboard::Chessboard()
     whiteCount = 2;
 }
 
+
+
+bool Chessboard::isTerminal()
+{
+    if ((blackCount + whiteCount) >= boardWidth * boardWidth)
+        return true;
+    for (int i = 0; i < boardWidth; i++)
+        for (int j = 0; j < boardWidth; j++)
+            if (isPlaceable(make_pair(i, j), WHITE) || isPlaceable(make_pair(i, j),BLACK))
+                return false;
+    return true;
+}
+
+bool Chessboard::isPlaceable(coordinate_t pos, color_t color)
+{
+
+}
