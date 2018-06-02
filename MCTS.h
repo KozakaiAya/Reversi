@@ -14,7 +14,9 @@ private:
     typedef pair<SearchNode*, bool> expand_t;
     Context context;
     expand_t getNextNode(SearchNode* rootNode);
-    static int valueOfPos[GRID_WIDTH][GRID_WIDTH];
+    static const int valueOfPos[GRID_WIDTH][GRID_WIDTH];
+    static const int visitThreshold;
+    bool isTerminal();
 public:
     MCTS(Context context);
     coordinate_t search();

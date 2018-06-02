@@ -14,11 +14,13 @@ const int MCTS::valueOfPos[GRID_WIDTH][GRID_WIDTH] = {
 	2,  1,  2,  8,  8,  2,  1,  2,
 	30, 2, 20, 15, 15, 20,  2, 20};
 
+const int MCTS::visitThreshold = 64;
+
 MCTS::MCTS(Context context): context(context) {};
 
 expand_t MCTS::getNextNode(SearchNode* x)
 {
-
+		
 }
 
 coordinate_t MCTS::search()
