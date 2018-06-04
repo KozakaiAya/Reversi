@@ -17,6 +17,8 @@ public:
     bool putChess(coordinate_t pos, color_t color);
 private:
     bool isPlaceable(coordinate_t pos, color_t color);
+    bool isInside(coordinate_t pos);
+    bool isEncompass(coordinate_t pos, color_t color, pair<int, int> dir);
     static const pair<int, int> dir[8];
     color_t board[boardWidth][boardWidth];
     int blackCount = 0;
