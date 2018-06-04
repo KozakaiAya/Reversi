@@ -19,7 +19,7 @@ const int MCTS::valueOfPos[GRID_WIDTH][GRID_WIDTH] = {
 	2, 1, 2, 8, 8, 2, 1, 2,
 	30, 2, 20, 15, 15, 20, 2, 20};
 
-MCTS::MCTS(Chessboard board, Chesscolor color, chrono::duration<chrono::milliseconds> timeLimit) : board(board), color(color), timeLimit(timeLimit)
+MCTS::MCTS(Chessboard board, Chesscolor color, chrono::milliseconds timeLimit) : board(board), color(color), timeLimit(timeLimit)
 {
 	root = make_shared<SearchNode>(new SearchNode(color, board));
 }
@@ -100,7 +100,7 @@ void MCTS::backPropagate(shared_ptr<SearchNode> currentNode, result_t result)
 coordinate_t MCTS::getNextStep()
 {
 	chrono::high_resolution_clock::time_point st = chrono::high_resolution_clock::now();
-	while (getTimeElapsed(st).count() < 0.9 * timeLimit.count())
+	while (getTimeElapsed(st).count() < 0.9 * static_cast<double>(timeLimit.count()))
 	{
 		auto nodeToRun = runTreePolicy(root);
 		if (nodeToRun != nullptr)
@@ -124,4 +124,10 @@ coordinate_t MCTS::getNextStep()
 		}
 	}
 	return toVisit;
+}
+
+chrono::milliseconds getTimeElapsed(chrono::high_resolution_clock::time_point st)
+{
+	chrono::high_resolution_clock::time_point now = chrono::high_resolution_clock::now();
+	return chrono::duration_cast<chrono::milliseconds>(now - st);
 }
