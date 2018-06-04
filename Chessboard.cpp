@@ -6,16 +6,16 @@ Chessboard::Chessboard()
 {
     for (int i = 0; i < boardWidth; i++)
         for (int j = 0; j < boardWidth; j++)
-            board[i][j] = FREE;
-    board[3][3] = WHITE;
-    board[3][4] = BLACK;
-    board[4][3] = BLACK;
-    board[4][4] = WHITE;
+            board[i][j] = Chesscolor::FREE;
+    board[3][3] = Chesscolor::WHITE;
+    board[3][4] = Chesscolor::BLACK;
+    board[4][3] = Chesscolor::BLACK;
+    board[4][4] = Chesscolor::WHITE;
     blackCount = 2;
     whiteCount = 2;
 }
 
-Chessboard::Chessboard(color_t board[boardWidth][boardWidth])
+Chessboard::Chessboard(Chesscolor board[boardWidth][boardWidth])
 {
     whiteCount = 0;
     blackCount = 0;
@@ -23,9 +23,9 @@ Chessboard::Chessboard(color_t board[boardWidth][boardWidth])
         for (int j = 0; j < boardWidth; j++)
         {
             this->board[i][j] = board[i][j];
-            if (board[i][j] == WHITE)
+            if (board[i][j] == Chesscolor::WHITE)
                 whiteCount++;
-            else if (board[i][j] == BLACK)
+            else if (board[i][j] == Chesscolor::BLACK)
                 blackCount++;
         }
 }
@@ -36,7 +36,7 @@ bool Chessboard::isTerminal()
         return true;
     for (int i = 0; i < boardWidth; i++)
         for (int j = 0; j < boardWidth; j++)
-            if (isPlaceable(make_pair(i, j), WHITE) || isPlaceable(make_pair(i, j), BLACK))
+            if (isPlaceable(make_pair(i, j), Chesscolor::WHITE) || isPlaceable(make_pair(i, j), Chesscolor::BLACK))
                 return false;
     return true;
 }
@@ -50,7 +50,7 @@ bool Chessboard::isInside(coordinate_t pos)
     else   
         return false;
 }
-bool Chessboard::isEncompass(coordinate_t pos, color_t color, pair<int, int> dir)
+bool Chessboard::isEncompass(coordinate_t pos, Chesscolor color, pair<int, int> dir)
 {
     bool getOppositeColor = false;
     bool getSameColor = false;
@@ -71,10 +71,10 @@ bool Chessboard::isEncompass(coordinate_t pos, color_t color, pair<int, int> dir
     return getSameColor & getOppositeColor;
 }
 
-bool Chessboard::isPlaceable(coordinate_t pos, color_t color)
+bool Chessboard::isPlaceable(coordinate_t pos, Chesscolor color)
 {
     bool flag = false;
-    if (board[pos.first][pos.second] != FREE)
+    if (board[pos.first][pos.second] != Chesscolor::FREE)
         return false;
     for (int i = 0;i < 8; i++)
     {
@@ -87,7 +87,7 @@ bool Chessboard::isPlaceable(coordinate_t pos, color_t color)
     return flag;
 }
 
-vector<coordinate_t> Chessboard::getPlaceable(color_t color)
+vector<coordinate_t> Chessboard::getPlaceable(Chesscolor color)
 {
     vector<coordinate_t> result;
     for (int i = 0;i < boardWidth; i++)
@@ -108,9 +108,9 @@ const pair<int, int> dir[8] = {{-1, -1},
                                {1, 0},
                                {1, 1}};
 
-bool Chessboard::putChess(coordinate_t pos, color_t color)
+bool Chessboard::putChess(coordinate_t pos, Chesscolor color)
 {
-    if (board[pos.first][pos.second] != FREE)
+    if (board[pos.first][pos.second] != Chesscolor::FREE)
     {
         return false;
     }
@@ -135,17 +135,17 @@ bool Chessboard::putChess(coordinate_t pos, color_t color)
     return true;
 }
 
-color_t Chessboard::getWinner()
+Chesscolor Chessboard::getWinner()
 {
     if (!isTerminal())
-        return FREE;
+        return Chesscolor::FREE;
     else
     {
         if (whiteCount > blackCount)
-            return WHITE;
+            return Chesscolor::WHITE;
         else if (blackCount > whiteCount)
-            return BLACK;
+            return Chesscolor::BLACK;
         else
-            return FREE;
+            return Chesscolor::FREE;
     }
 }

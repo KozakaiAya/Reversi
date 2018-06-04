@@ -12,12 +12,12 @@ private:
     Chessboard board;
     int visitCount, winCount;
     bool visited;
-    color_t currentColor;
+    Chesscolor currentColor;
     shared_ptr<SearchNode> parent;
     vector<shared_ptr<SearchNode>> children;
     vector<coordinate_t> steps;
 public:
-    SearchNode(color_t color, const Chessboard& board); 
+    SearchNode(Chesscolor color, const Chessboard& board); 
     bool visitNode(); //vC++, visited, createChildren
     vector<pair<shared_ptr<SearchNode>, coordinate_t>> getChildren();
     shared_ptr<SearchNode> getParent();

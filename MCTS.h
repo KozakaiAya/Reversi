@@ -11,7 +11,7 @@ class MCTS
 private:
     typedef bool result_t;
     Chessboard board;
-    color_t color;
+    Chesscolor color;
     static const int valueOfPos[GRID_WIDTH][GRID_WIDTH];
     shared_ptr<SearchNode> root;
     shared_ptr<SearchNode> runTreePolicy(shared_ptr<SearchNode> cur);
@@ -19,6 +19,6 @@ private:
     void backPropagate(shared_ptr<SearchNode> currentNode, result_t result);
     time_t timeLimit;
 public:
-    MCTS(Chessboard board, color_t color, time_t timeLimit);
+    MCTS(Chessboard board, Chesscolor color, time_t timeLimit);
     coordinate_t getNextStep();
 };

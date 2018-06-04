@@ -19,7 +19,7 @@ const int MCTS::valueOfPos[GRID_WIDTH][GRID_WIDTH] = {
 	30, 2, 20, 15, 15, 20,  2, 20};
 
 
-MCTS::MCTS(Chessboard board, color_t color, time_t timeLimit):board(board), color(color), timeLimit(timeLimit)
+MCTS::MCTS(Chessboard board, Chesscolor color, time_t timeLimit):board(board), color(color), timeLimit(timeLimit)
 {
 	root = make_shared<SearchNode>(new SearchNode(color, board));
 }
@@ -64,7 +64,7 @@ shared_ptr<SearchNode> MCTS::runTreePolicy(shared_ptr<SearchNode> cur)
 MCTS::result_t MCTS::runDefaultPolicy(shared_ptr<SearchNode> currentNode)
 {
 	Chessboard currentBoard(currentNode->getBoard());
-	color_t currentColor = this->color;
+	Chesscolor currentColor = this->color;
 	while (!currentBoard.isTerminal())
 	{
 		auto nextSteps = currentBoard.getPlaceable(currentColor);
