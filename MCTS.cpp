@@ -70,9 +70,18 @@ MCTS::result_t MCTS::runDefaultPolicy(shared_ptr<SearchNode> currentNode)
 		auto nextSteps = currentBoard.getPlaceable(currentColor);
 		if (nextSteps.size == 0)
 		{
-			nextSteps = 
+			currentColor = -currentColor;
+			nextSteps = currentBoard.getPlaceable(currentColor);
 		}
-		default_random_engine generator;
-
+		default_random_engine gen;
+		uniform_int_distribution<int> dist(0, nextSteps.size - 1);
+		int move = dist(gen);
+		currentBoard.putChess(nextSteps.at(move), currentColor);
+		currentColor = -currentColor;
 	}
+	if (currentBoard.getWinner == this->color)
+		return true;
+	else 
+		return false;
 }
+
