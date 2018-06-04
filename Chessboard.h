@@ -12,7 +12,9 @@ private:
 public:
     Chessboard();
     Chessboard(color_t board[boardWidth][boardWidth]);
+    Chessboard(const Chessboard& c) = default;
     bool isTerminal();
+    color_t getWinner();
     vector<coordinate_t> getPlaceable(color_t color);
     bool putChess(coordinate_t pos, color_t color);
 private:

@@ -1,3 +1,7 @@
+#include <memory>
+#include <limits>
+#include <random>
+
 #include "Global.h"
 #include "MCTS.h"
 #include "SearchTree.h"
@@ -14,18 +18,61 @@ const int MCTS::valueOfPos[GRID_WIDTH][GRID_WIDTH] = {
 	2,  1,  2,  8,  8,  2,  1,  2,
 	30, 2, 20, 15, 15, 20,  2, 20};
 
-const int MCTS::visitThreshold = 64;
 
-MCTS::MCTS(Context context): context(context) {};
-
-expand_t MCTS::getNextNode(SearchNode* x)
+MCTS::MCTS(Chessboard board, color_t color, time_t timeLimit):board(board), color(color), timeLimit(timeLimit)
 {
-		
+	root = make_shared<SearchNode>(new SearchNode(color, board));
 }
 
-coordinate_t MCTS::search()
+shared_ptr<SearchNode> MCTS::runTreePolicy(shared_ptr<SearchNode> cur)
 {
-    SearchNode* rootNode, currentNode;
-    rootNode = new SearchNode();
-    
+	if (!cur->isVisited())
+	{
+		cur->visitNode();
+		return cur;
+	}
+	else
+	{
+		auto children = cur->getChildren();
+		bool isFullyExpanded = true;
+		for (auto x: children)
+		{
+			if (!x.first->isVisited())
+			{
+				isFullyExpanded = false;
+				return runTreePolicy(x.first);
+			}
+		}
+		if (isFullyExpanded)
+		{
+			shared_ptr<SearchNode> toVisit;
+			double max = numeric_limits<double>::lowest();
+			for (auto x: children)
+			{
+				double t = valueOfPos[x.second.first][x.second.second] + x.first->getUCTValue();
+				if (t > max)
+				{
+					max = t;
+					toVisit = x.first;
+				}
+			}
+			return runTreePolicy(toVisit);
+		}
+	}
+}
+
+MCTS::result_t MCTS::runDefaultPolicy(shared_ptr<SearchNode> currentNode)
+{
+	Chessboard currentBoard(currentNode->getBoard());
+	color_t currentColor = this->color;
+	while (!currentBoard.isTerminal())
+	{
+		auto nextSteps = currentBoard.getPlaceable(currentColor);
+		if (nextSteps.size == 0)
+		{
+			nextSteps = 
+		}
+		default_random_engine generator;
+
+	}
 }

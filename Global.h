@@ -11,5 +11,7 @@ typedef enum
     BLACK = 1
 } color_t;
 
+
+
 typedef pair<int, int> coordinate_t;
 

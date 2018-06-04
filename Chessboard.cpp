@@ -107,3 +107,45 @@ const pair<int, int> dir[8] = {{-1, -1},
                                {1, -1},
                                {1, 0},
                                {1, 1}};
+
+bool Chessboard::putChess(coordinate_t pos, color_t color)
+{
+    if (board[pos.first][pos.second] != FREE)
+    {
+        return false;
+    }
+    else
+    {
+        board[pos.first][pos.second] = color;
+        for(int i = 0;i < 8;i++)
+        {
+            if (isEncompass(pos, color, dir[i]))
+            {
+                int x = pos.first + dir[i].first;
+                int y = pos.second + dir[i].second;
+                while (isInside(make_pair(x, y)) && (board[x][y] == -color))
+                {
+                    board[x][y] = color;
+                    x+=dir[i].first;
+                    y+=dir[i].second;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+color_t Chessboard::getWinner()
+{
+    if (!isTerminal())
+        return FREE;
+    else
+    {
+        if (whiteCount > blackCount)
+            return WHITE;
+        else if (blackCount > whiteCount)
+            return BLACK;
+        else
+            return FREE;
+    }
+}

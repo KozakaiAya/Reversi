@@ -14,7 +14,7 @@ private:
     color_t color;
     static const int valueOfPos[GRID_WIDTH][GRID_WIDTH];
     shared_ptr<SearchNode> root;
-    shared_ptr<SearchNode> runTreePolicy();
+    shared_ptr<SearchNode> runTreePolicy(shared_ptr<SearchNode> cur);
     result_t runDefaultPolicy(shared_ptr<SearchNode> currentNode);
     void backPropagate(shared_ptr<SearchNode> currentNode, result_t result);
     time_t timeLimit;
