@@ -1,5 +1,6 @@
 #include <utility>
 #include <memory>
+#include <chrono>
 
 #include "Global.h"
 #include "SearchTree.h"
@@ -17,8 +18,9 @@ private:
     shared_ptr<SearchNode> runTreePolicy(shared_ptr<SearchNode> cur);
     result_t runDefaultPolicy(shared_ptr<SearchNode> currentNode);
     void backPropagate(shared_ptr<SearchNode> currentNode, result_t result);
-    time_t timeLimit;
+    chrono::duration<chrono::milliseconds> timeLimit;
+    chrono::duration<chrono::milliseconds> getTimeElapsed(chrono::high_resolution_clock::time_point st);
 public:
-    MCTS(Chessboard board, Chesscolor color, time_t timeLimit);
+    MCTS(Chessboard board, Chesscolor color, chrono::duration<chrono::milliseconds> timeLimit);
     coordinate_t getNextStep();
 };
