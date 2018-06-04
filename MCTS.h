@@ -17,7 +17,8 @@ private:
     shared_ptr<SearchNode> runTreePolicy();
     result_t runDefaultPolicy(shared_ptr<SearchNode> currentNode);
     void backPropagate(shared_ptr<SearchNode> currentNode, result_t result);
+    time_t timeLimit;
 public:
-    MCTS(Chessboard board, color_t color);
+    MCTS(Chessboard board, color_t color, time_t timeLimit);
     coordinate_t getNextStep();
 };

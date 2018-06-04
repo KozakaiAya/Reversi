@@ -1,5 +1,7 @@
 #include <utility>
 
+#define GRID_WIDTH 8
+
 using namespace std;
 
 typedef enum

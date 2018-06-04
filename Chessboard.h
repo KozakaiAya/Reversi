@@ -8,7 +8,7 @@ using namespace std;
 class Chessboard
 {
 private:
-    static const int boardWidth = 8;
+    static const int boardWidth = GRID_WIDTH;
 public:
     Chessboard();
     Chessboard(color_t board[boardWidth][boardWidth]);
