@@ -1,9 +1,12 @@
+#ifndef REVERSI_CHESSBOARD_H
+#define REVERSI_CHESSBOARD_H
 #include <utility>
 #include <vector>
 
 #include "Global.h"
 
 using namespace std;
+
 
 class Chessboard
 {
@@ -26,3 +29,5 @@ private:
     int blackCount = 0;
     int whiteCount = 0;
 };
+
+#endif

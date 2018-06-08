@@ -99,7 +99,7 @@ vector<coordinate_t> Chessboard::getPlaceable(Chesscolor color)
     return result;
 }
 
-const pair<int, int> dir[8] = {{-1, -1}, 
+const pair<int, int> Chessboard::dir[8] = {{-1, -1}, 
                                {-1, 0},
                                {-1, 1},
                                {0, -1},

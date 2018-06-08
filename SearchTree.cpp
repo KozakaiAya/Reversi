@@ -45,10 +45,10 @@ vector<pair<shared_ptr<SearchNode>, coordinate_t>> SearchNode::getChildren()
 	return children;
 }
 
-double SearchNode::getUCTValue()
+double SearchNode::getUCTValue(double constant)
 {
 	double score = double(this->getWin()) / this->getVisit() +
-                    c * std::sqrt(2 * std::log(this->parent->getVisit()) / double(this->getVisit()));
+                    constant * std::sqrt(2 * std::log(this->parent->getVisit()) / double(this->getVisit()));
 }
 
 int SearchNode::getVisit()
@@ -76,12 +76,12 @@ void SearchNode::createChildren()
 	for (auto positions : possibleChildren)
 	{
 		steps.push_back(positions);
-		const Chessboard* newboard = board;
-		if (newboard->putChess(positions, childcolor))
+		Chessboard& newboard = board;
+		if (newboard.putChess(positions, childcolor))
 		{
-			shared_ptr<SearchNode> child = make_shared<SearchNode>(new SearchNode(childcolor, newboard));
-			child->parent = this;
-			children.push_back(child);
+			shared_ptr<SearchNode> child = make_shared<SearchNode>(SearchNode(childcolor, newboard));
+			child->parent = make_shared<SearchNode>(*this);
+			children.push_back(make_pair(child, positions));
 		}
 	}
 

@@ -1,3 +1,5 @@
+#ifndef REVERSI_MCTS_H
+#define REVERSI_MCTS_H
 #include <utility>
 #include <memory>
 #include <chrono>
@@ -6,6 +8,7 @@
 #include "SearchTree.h"
 
 using namespace std;
+
 
 class MCTS
 {
@@ -24,3 +27,5 @@ public:
     MCTS(Chessboard board, Chesscolor color, chrono::milliseconds timeLimit);
     coordinate_t getNextStep();
 };
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef REVERSI_SEARCHTREE_H
+#define REVERSI_SEARCHTREE_H
 #include <vector>
 #include <memory>
 
@@ -14,15 +16,15 @@ private:
     bool visited;
     Chesscolor currentColor;
     shared_ptr<SearchNode> parent;
-    vector<shared_ptr<SearchNode>> children;
+    vector<pair<shared_ptr<SearchNode>, coordinate_t>> children;
     vector<coordinate_t> steps;
     void createChildren();
 public:
-    SearchNode(Chesscolor color, const Chessboard& board); 
+    SearchNode(Chesscolor color, const Chessboard& board);
     bool visitNode(); //vC++, visited, createChildren
     vector<pair<shared_ptr<SearchNode>, coordinate_t>> getChildren();
     shared_ptr<SearchNode> getParent(); //
-    double getUCTValue();
+    double getUCTValue( double );
     int getWin();
     int getVisit();
     void addVisit(); //
@@ -31,3 +33,4 @@ public:
     Chessboard getBoard(); //
 };
 
+#endif

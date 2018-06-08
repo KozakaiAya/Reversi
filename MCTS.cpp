@@ -21,7 +21,7 @@ const int MCTS::valueOfPos[GRID_WIDTH][GRID_WIDTH] = {
 
 MCTS::MCTS(Chessboard board, Chesscolor color, chrono::milliseconds timeLimit) : board(board), color(color), timeLimit(timeLimit)
 {
-	root = make_shared<SearchNode>(new SearchNode(color, board));
+	root = make_shared<SearchNode>(SearchNode(color, board));
 }
 
 shared_ptr<SearchNode> MCTS::runTreePolicy(shared_ptr<SearchNode> cur)
@@ -49,7 +49,7 @@ shared_ptr<SearchNode> MCTS::runTreePolicy(shared_ptr<SearchNode> cur)
 			double max = numeric_limits<double>::lowest();
 			for (auto x : children)
 			{
-				double t = valueOfPos[x.second.first][x.second.second] + x.first->getUCTValue();
+				double t = valueOfPos[x.second.first][x.second.second] + x.first->getUCTValue(0.5);
 				if (t > max)
 				{
 					max = t;
@@ -68,18 +68,18 @@ MCTS::result_t MCTS::runDefaultPolicy(shared_ptr<SearchNode> currentNode)
 	while (!currentBoard.isTerminal())
 	{
 		auto nextSteps = currentBoard.getPlaceable(currentColor);
-		if (nextSteps.size == 0)
+		if (nextSteps.size() == 0)
 		{
 			currentColor = -currentColor;
 			nextSteps = currentBoard.getPlaceable(currentColor);
 		}
 		default_random_engine gen;
-		uniform_int_distribution<int> dist(0, nextSteps.size - 1);
+		uniform_int_distribution<int> dist(0, nextSteps.size() - 1);
 		int move = dist(gen);
 		currentBoard.putChess(nextSteps.at(move), currentColor);
 		currentColor = -currentColor;
 	}
-	if (currentBoard.getWinner == this->color)
+	if (currentBoard.getWinner() == this->color)
 		return true;
 	else
 		return false;
@@ -110,13 +110,13 @@ coordinate_t MCTS::getNextStep()
 	}
 
 	auto children = root->getChildren();
-	if (children.size == 0)
+	if (children.size() == 0)
 		return make_pair(-1, -1);
 	coordinate_t toVisit;
 	double max = numeric_limits<double>::lowest();
 	for (auto x : children)
 	{
-		double t = valueOfPos[x.second.first][x.second.second] + x.first->getUCTValue();
+		double t = valueOfPos[x.second.first][x.second.second] + x.first->getUCTValue(0.5);
 		if (t > max)
 		{
 			max = t;
@@ -126,7 +126,7 @@ coordinate_t MCTS::getNextStep()
 	return toVisit;
 }
 
-chrono::milliseconds getTimeElapsed(chrono::high_resolution_clock::time_point st)
+chrono::milliseconds MCTS::getTimeElapsed(chrono::high_resolution_clock::time_point st)
 {
 	chrono::high_resolution_clock::time_point now = chrono::high_resolution_clock::now();
 	return chrono::duration_cast<chrono::milliseconds>(now - st);
