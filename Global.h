@@ -7,21 +7,22 @@
 
 using namespace std;
 
+/*
  typedef enum
  {
      FREE = 0,
      WHITE = -1,
      BLACK = 1
  } Chesscolor;
+*/
 
-/*
 enum class Chesscolor
 {
     FREE = 0,
     WHITE = -1,
     BLACK = 1
 };
-*/
+
 
 
 Chesscolor operator-(const Chesscolor& color)
