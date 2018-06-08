@@ -23,6 +23,8 @@ public:
     vector<pair<shared_ptr<SearchNode>, coordinate_t>> getChildren();
     shared_ptr<SearchNode> getParent(); //
     double getUCTValue();
+    int getWin();
+    int getVisit();
     void addVisit(); //
     void addWin();  //
     bool isVisited(); //

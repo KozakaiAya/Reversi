@@ -47,8 +47,18 @@ vector<pair<shared_ptr<SearchNode>, coordinate_t>> SearchNode::getChildren()
 
 double SearchNode::getUCTValue()
 {
-	double score = double(this->getReward()) / this->getAccessTime() +
-                    c * std::sqrt(2 * std::log(this->parent->getAccessTime()) / double(this->getAccessTime()));
+	double score = double(this->getWin()) / this->getVisit() +
+                    c * std::sqrt(2 * std::log(this->parent->getVisit()) / double(this->getVisit()));
+}
+
+int SearchNode::getVisit()
+{
+	return visitCount;
+}
+
+int SearchNode::getWin()
+{
+	return winCount;
 }
 
 
