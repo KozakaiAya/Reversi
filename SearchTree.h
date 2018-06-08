@@ -20,11 +20,12 @@ private:
     vector<coordinate_t> steps;
     void createChildren();
 public:
-    SearchNode(Chesscolor color, const Chessboard& board);
+    SearchNode(Chesscolor color, const Chessboard& board); 
     bool visitNode(); //vC++, visited, createChildren
     vector<pair<shared_ptr<SearchNode>, coordinate_t>> getChildren();
     shared_ptr<SearchNode> getParent(); //
     double getUCTValue( double );
+    Chesscolor getCurrentColor() { return currentColor; }
     int getWin();
     int getVisit();
     void addVisit(); //
@@ -34,3 +35,4 @@ public:
 };
 
 #endif
+

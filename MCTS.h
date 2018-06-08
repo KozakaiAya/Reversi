@@ -13,6 +13,7 @@ using namespace std;
 class MCTS
 {
 private:
+
     typedef bool result_t;
     Chessboard board;
     Chesscolor color;
@@ -26,6 +27,7 @@ private:
 public:
     MCTS(Chessboard board, Chesscolor color, chrono::milliseconds timeLimit);
     coordinate_t getNextStep();
+    
 };
 
 #endif

@@ -4,6 +4,9 @@ SearchNode::SearchNode(Chesscolor color, const Chessboard& board)
 {
 	this->currentColor = color;
 	this->board = board;
+	visitCount = 0;
+	winCount = 0;
+	visited = false;
 }
 
 void SearchNode::addVisit()
@@ -76,7 +79,7 @@ void SearchNode::createChildren()
 	for (auto positions : possibleChildren)
 	{
 		steps.push_back(positions);
-		Chessboard& newboard = board;
+		Chessboard newboard = board;
 		if (newboard.putChess(positions, childcolor))
 		{
 			shared_ptr<SearchNode> child = make_shared<SearchNode>(SearchNode(childcolor, newboard));

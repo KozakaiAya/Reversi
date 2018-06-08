@@ -61,13 +61,21 @@ bool Chessboard::isEncompass(coordinate_t pos, Chesscolor color, pair<int, int> 
         x+=dir.first;
         y+=dir.second;
         if (!isInside(make_pair(x, y))) break;
-        if ((board[x][y] == -color) && !getSameColor)
-            getOppositeColor = true;
-        if ((board[x][y] == color) && getOppositeColor)
+        if (!getSameColor && !getOppositeColor)
         {
-            getSameColor = true;
+            if (board[x][y] == -color)
+                getOppositeColor = true;
+            else
+                break;
         }
-    } while(!getSameColor && !getOppositeColor && isInside(make_pair(x, y)));
+        else if (getOppositeColor && !getSameColor)
+        {
+            if (board[x][y] == color)
+                getSameColor = true;
+            else if (board[x][y] == Chesscolor::FREE)
+                break;
+        }
+    } while((!getSameColor || !getOppositeColor) && isInside(make_pair(x, y)));
     return getSameColor & getOppositeColor;
 }
 
@@ -116,6 +124,8 @@ bool Chessboard::putChess(coordinate_t pos, Chesscolor color)
     }
     else
     {
+        if (color == Chesscolor::BLACK) this->blackCount++;
+        if (color == Chesscolor::WHITE) this->whiteCount++;
         board[pos.first][pos.second] = color;
         for(int i = 0;i < 8;i++)
         {

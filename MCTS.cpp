@@ -2,6 +2,7 @@
 #include <limits>
 #include <random>
 #include <chrono>
+#include <iostream>
 
 #include "Global.h"
 #include "MCTS.h"
@@ -22,6 +23,7 @@ const int MCTS::valueOfPos[GRID_WIDTH][GRID_WIDTH] = {
 MCTS::MCTS(Chessboard board, Chesscolor color, chrono::milliseconds timeLimit) : board(board), color(color), timeLimit(timeLimit)
 {
 	root = make_shared<SearchNode>(SearchNode(color, board));
+    //root->visitNode();
 }
 
 shared_ptr<SearchNode> MCTS::runTreePolicy(shared_ptr<SearchNode> cur)
@@ -40,7 +42,7 @@ shared_ptr<SearchNode> MCTS::runTreePolicy(shared_ptr<SearchNode> cur)
 			if (!x.first->isVisited())
 			{
 				isFullyExpanded = false;
-				return runTreePolicy(x.first);
+				return x.first;
 			}
 		}
 		if (isFullyExpanded)
@@ -49,6 +51,7 @@ shared_ptr<SearchNode> MCTS::runTreePolicy(shared_ptr<SearchNode> cur)
 			double max = numeric_limits<double>::lowest();
 			for (auto x : children)
 			{
+				cout << "Current Step: " << x.second.first << ", " << x.second.second << " Current Color: " << cur->getCurrentColor() << endl;
 				double t = valueOfPos[x.second.first][x.second.second] + x.first->getUCTValue(0.5);
 				if (t > max)
 				{
@@ -110,7 +113,7 @@ coordinate_t MCTS::getNextStep()
 	}
 
 	auto children = root->getChildren();
-	if (children.size() == 0)
+	if ((children.size() != 0 && children[0].first->getCurrentColor() == root->getCurrentColor()) || children.size() == 0)
 		return make_pair(-1, -1);
 	coordinate_t toVisit;
 	double max = numeric_limits<double>::lowest();
