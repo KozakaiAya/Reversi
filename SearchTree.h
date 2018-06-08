@@ -16,15 +16,16 @@ private:
     shared_ptr<SearchNode> parent;
     vector<shared_ptr<SearchNode>> children;
     vector<coordinate_t> steps;
+    void createChildren();
 public:
     SearchNode(Chesscolor color, const Chessboard& board); 
     bool visitNode(); //vC++, visited, createChildren
     vector<pair<shared_ptr<SearchNode>, coordinate_t>> getChildren();
-    shared_ptr<SearchNode> getParent();
+    shared_ptr<SearchNode> getParent(); //
     double getUCTValue();
-    void addVisit();
-    void addWin();
-    bool isVisited();
-    Chessboard getBoard();
+    void addVisit(); //
+    void addWin();  //
+    bool isVisited(); //
+    Chessboard getBoard(); //
 };
 
