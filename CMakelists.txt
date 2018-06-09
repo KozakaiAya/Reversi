@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(Reversi)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Ofast")
 
 set(SOURCE_FILES Reversi.cpp Global.h MCTS.cpp MCTS.h SearchTree.cpp SearchTree.h Chessboard.cpp Client.h Client.cpp)
 add_executable(reversi ${SOURCE_FILES})
