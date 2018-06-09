@@ -61,11 +61,15 @@ Chesscolor Client::createSession(string sessionID) {
         string req = "create_session/" + sessionID;
         string ret = httpGET(req);
         if (ret == "W") {
+#ifdef _NETWORK_DEBUG_
             cout << "Session created. My color is: " << Chesscolor::WHITE << endl;
+#endif
             return Chesscolor::WHITE;
         }
         else if (ret == "B") {
+#ifdef _NETWORK_DEBUG_
             cout << "Session created. My color is: " << Chesscolor::BLACK << endl;
+#endif
             return Chesscolor::BLACK;
         }
     }
@@ -76,10 +80,14 @@ bool Client::move(int x, int y, Chesscolor color) {
         string req = "move/" + sessionID + "/" + to_string(x) + "/" + to_string(y) + "/" + to_string(color);
         string ret = httpGET(req);
         if (ret == "SUCCESS") {
+#ifdef _NETWORK_DEBUG_
             cout << "Move (" << x << ", " << y << ") succeeded." << endl;
+#endif
             return true;
         } else if (ret == "ERROR") {
+#ifdef _NETWORK_DEBUG_
             cout << "Move (" << x << ", " << y << ") error." << endl;
+#endif
             return false;
         }
     }
@@ -90,7 +98,9 @@ string Client::getBoard() {
         string req = "board_string/" + sessionID;
         string ret = httpGET(req);
         if (ret.length() == 127) {
+#ifdef _NETWORK_DEBUG_
             cout << "Current board_string: " << ret << endl;
+#endif
             return ret;
         }
     }
@@ -102,11 +112,15 @@ Chesscolor Client::turn() {
         string req = "turn/" + sessionID;
         string ret = httpGET(req);
         if (ret == "W") {
+#ifdef _NETWORK_DEBUG_
             cout << "Current Turn: " << ret << endl;
+#endif
             return Chesscolor::WHITE;
         }
         else {
+#ifdef _NETWORK_DEBUG_
             cout << "Current Turn: " << ret << endl;
+#endif
             return Chesscolor::BLACK;
         }
     }

@@ -4,6 +4,8 @@
 #include <cmath>
 #include <iostream>
 
+#define _NETWORK_DEBUG_
+
 #define GRID_WIDTH 8
 
 using namespace std;
