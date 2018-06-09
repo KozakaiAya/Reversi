@@ -3,5 +3,5 @@ project(Reversi)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES Reversi.cpp Global.h  MCTS.cpp MCTS.h SearchTree.cpp SearchTree.h Chessboard.cpp )
+set(SOURCE_FILES Reversi.cpp Global.h MCTS.cpp MCTS.h SearchTree.cpp SearchTree.h Chessboard.cpp Client.h Client.cpp)
 add_executable(reversi ${SOURCE_FILES})

@@ -24,7 +24,14 @@ enum class Chesscolor
     BLACK = 1
 };
 
-
+static string to_string(const Chesscolor &color) {
+    if (color == Chesscolor::WHITE)
+        return "W";
+    else if (color == Chesscolor::BLACK)
+        return "B";
+    else
+        return "F";
+}
 
 static Chesscolor operator-(const Chesscolor& color)
 {
