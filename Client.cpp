@@ -65,7 +65,7 @@ Chesscolor Client::createSession(string sessionID) {
             return Chesscolor::WHITE;
         }
         else if (ret == "B") {
-            cout << "Session created. My color is: " << Chesscolor::WHITE << endl;
+            cout << "Session created. My color is: " << Chesscolor::BLACK << endl;
             return Chesscolor::BLACK;
         }
     }
