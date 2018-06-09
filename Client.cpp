@@ -79,7 +79,7 @@ bool Client::move(int x, int y, Chesscolor color) {
             cout << "Move (" << x << ", " << y << ") succeeded." << endl;
             return true;
         } else if (ret == "ERROR") {
-            cout << << "Move (" << x << ", " << y << ") error." << endl;
+            cout << "Move (" << x << ", " << y << ") error." << endl;
             return false;
         }
     }
