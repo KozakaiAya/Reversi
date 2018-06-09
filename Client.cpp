@@ -60,10 +60,14 @@ Chesscolor Client::createSession(string sessionID) {
     while (1) {
         string req = "create_session/" + sessionID;
         string ret = httpGET(req);
-        if (ret == "W")
+        if (ret == "W") {
+            cout << "Session created. My color is: " << Chesscolor::WHITE << endl;
             return Chesscolor::WHITE;
-        else if (ret == "B")
+        }
+        else if (ret == "B") {
+            cout << "Session created. My color is: " << Chesscolor::WHITE << endl;
             return Chesscolor::BLACK;
+        }
     }
 }
 
@@ -71,26 +75,39 @@ bool Client::move(int x, int y, Chesscolor color) {
     while (1) {
         string req = "move/" + sessionID + "/" + to_string(x) + "/" + to_string(y) + "/" + to_string(color);
         string ret = httpGET(req);
-        if (ret == "SUCCESS")
+        if (ret == "SUCCESS") {
+            cout << "Move (" << x << ", " << y << ") succeeded." << endl;
             return true;
-        else if (ret == "ERROR");
-        return false;
+        } else if (ret == "ERROR") {
+            cout << << "Move (" << x << ", " << y << ") error." << endl;
+            return false;
+        }
     }
 }
 
 string Client::getBoard() {
-    string req = "board_string/" + sessionID;
-    string ret = httpGET(req);
-    return ret;
+    while (1) {
+        string req = "board_string/" + sessionID;
+        string ret = httpGET(req);
+        if (ret.length() == 127) {
+            cout << "Current board_string: " << ret << endl;
+            return ret;
+        }
+    }
+
 }
 
 Chesscolor Client::turn() {
     while (1) {
         string req = "turn/" + sessionID;
         string ret = httpGET(req);
-        if (ret == "W")
+        if (ret == "W") {
+            cout << "Current Turn: " << ret << endl;
             return Chesscolor::WHITE;
-        else
+        }
+        else {
+            cout << "Current Turn: " << ret << endl;
             return Chesscolor::BLACK;
+        }
     }
 }
