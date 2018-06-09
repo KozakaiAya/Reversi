@@ -15,19 +15,26 @@ Chessboard::Chessboard()
     whiteCount = 2;
 }
 
-Chessboard::Chessboard(Chesscolor board[boardWidth][boardWidth])
-{
+Chessboard::Chessboard(string board_string) {
     whiteCount = 0;
     blackCount = 0;
-    for (int i = 0; i < boardWidth; i++)
-        for (int j = 0; j < boardWidth; j++)
-        {
-            this->board[i][j] = board[i][j];
-            if (board[i][j] == Chesscolor::WHITE)
+    vector<string> lines;
+    splitString(board_string, lines, ";");
+    for (int i = 0; i < boardWidth; i++) {
+        vector<string> cols;
+        splitString(lines.at(i), cols, ".");
+        for (int j = 0; j < boardWidth; j++) {
+            if (cols.at(j) == "0")
+                board[i][j] = Chesscolor::FREE;
+            else if (cols.at(j) == "W") {
                 whiteCount++;
-            else if (board[i][j] == Chesscolor::BLACK)
+                board[i][j] = Chesscolor::WHITE;
+            } else if (cols.at(j) == "B") {
                 blackCount++;
+                board[i][j] = Chesscolor::BLACK;
+            }
         }
+    }
 }
 
 bool Chessboard::isTerminal()
@@ -39,6 +46,20 @@ bool Chessboard::isTerminal()
             if (isPlaceable(make_pair(i, j), Chesscolor::WHITE) || isPlaceable(make_pair(i, j), Chesscolor::BLACK))
                 return false;
     return true;
+}
+
+void Chessboard::splitString(const std::string &s, std::vector<std::string> &v, const std::string &c) {
+    std::string::size_type pos1, pos2;
+    pos2 = s.find(c);
+    pos1 = 0;
+    while (std::string::npos != pos2) {
+        v.push_back(s.substr(pos1, pos2 - pos1));
+
+        pos1 = pos2 + c.size();
+        pos2 = s.find(c, pos1);
+    }
+    if (pos1 != s.length())
+        v.push_back(s.substr(pos1));
 }
 
 bool Chessboard::isInside(coordinate_t pos)

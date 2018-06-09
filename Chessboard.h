@@ -15,6 +15,8 @@ private:
 public:
     Chessboard();
     Chessboard(Chesscolor board[boardWidth][boardWidth]);
+
+    Chessboard(string board_string);
     Chessboard(const Chessboard& c) = default;
     bool isTerminal();
     Chesscolor getWinner();
@@ -24,6 +26,8 @@ private:
     bool isPlaceable(coordinate_t pos, Chesscolor color);
     bool isInside(coordinate_t pos);
     bool isEncompass(coordinate_t pos, Chesscolor color, pair<int, int> dir);
+
+    void splitString(const std::string &s, std::vector<std::string> &v, const std::string &c);
     static const pair<int, int> dir[8];
     Chesscolor board[boardWidth][boardWidth];
     int blackCount = 0;
